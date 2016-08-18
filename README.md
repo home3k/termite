@@ -1,2 +1,2 @@
 # termite
-A alternative microservice framework
+An alternative microservice framework
