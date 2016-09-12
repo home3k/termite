@@ -13,13 +13,14 @@
 
 package me.home3k.termite.server;
 
+import java.nio.channels.SelectionKey;
+
 /**
  * @author home3k
  */
 public interface Dispatcher {
 
-    void onChannelReadEvent();
-
+    void onChannelReadEvent(TermiteReactor reactor, Object readObject, SelectionKey key);
 
     void stop() throws InterruptedException;
 }
