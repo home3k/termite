@@ -16,21 +16,5 @@ package me.home3k.termite.server;
 /**
  * @author home3k
  */
-public class TermiteServer implements Server {
-
-    private int workerCount = Runtime.getRuntime().availableProcessors() * 2;
-
-    private int execThreadCount = 16;
-
-    private int maxRequestSize = 1014 * 1024 * 10;
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
+public class TcpServerSocketChannel {
 }

@@ -20,7 +20,7 @@ import java.nio.channels.SelectionKey;
  */
 public interface Dispatcher {
 
-    void onChannelReadEvent(TermiteReactor reactor, Object readObject, SelectionKey key);
+    void onChannelReadEvent(AbstractChannel channel, Object readObject, SelectionKey key);
 
     void stop() throws InterruptedException;
 }
