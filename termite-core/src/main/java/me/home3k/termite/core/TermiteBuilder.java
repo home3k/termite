@@ -13,6 +13,9 @@
 
 package me.home3k.termite.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author home3k
  */
@@ -29,6 +32,7 @@ public final class TermiteBuilder {
     }
 
     public interface NameStep {
+
         BuildStep defaultInfo();
 
         BuildStep defaultInfo(String name);
@@ -39,14 +43,37 @@ public final class TermiteBuilder {
     }
 
     public interface ServerStep {
-        ServerStep type(String type);
+
+        IocStep defaultServer();
+
+        ServerStep serverType(String type);
+
+        ServerStep port(int port);
+
+        ServerStep threadCount(int threadCount);
+
+        IocStep noMoreServerConfig();
 
     }
 
     public interface IocStep {
+
+        RouterStep defaultIoc();
+
+        IocStep iocType(String type);
+
+        IocStep container(Object object);
+
+        RouterStep noMoreIocConfig();
     }
 
     public interface RouterStep {
+
+        BuildStep noRouter();
+
+        RouterStep router(Router router);
+
+        BuildStep noMoreRouter();
     }
 
     public interface ConfigStep {
@@ -58,9 +85,16 @@ public final class TermiteBuilder {
     }
 
 
-    private static class TermiteSteps implements ConfigStep, NameStep, BuildStep {
+    private static class TermiteSteps implements ConfigStep, NameStep, ServerStep, IocStep, RouterStep, BuildStep {
 
         private String name;
+        private String serverType;
+        private int port;
+        private int threadCount;
+        private String iocType;
+        private Object container;
+
+        private List<Router> routers = new ArrayList<>();
 
         @Override
         public BuildStep defaultInfo() {
@@ -76,12 +110,80 @@ public final class TermiteBuilder {
         @Override
         public ServerStep name(String name) {
             this.name = name;
-            return null;
+            return this;
         }
 
         @Override
         public ServerStep noName() {
-            return null;
+            this.name = null;
+            return this;
+        }
+
+        @Override
+        public RouterStep defaultIoc() {
+            return this;
+        }
+
+        @Override
+        public IocStep container(Object object) {
+            this.container = object;
+            return this;
+        }
+
+        @Override
+        public RouterStep noMoreIocConfig() {
+            return this;
+        }
+
+        @Override
+        public BuildStep noRouter() {
+            this.routers.clear();
+            return this;
+        }
+
+        @Override
+        public RouterStep router(Router router) {
+            this.routers.add(router);
+            return this;
+        }
+
+        @Override
+        public BuildStep noMoreRouter() {
+            return this;
+        }
+
+        @Override
+        public IocStep defaultServer() {
+            return this;
+        }
+
+        @Override
+        public ServerStep serverType(String type) {
+            this.serverType = type;
+            return this;
+        }
+
+        @Override
+        public IocStep iocType(String type) {
+            this.iocType = type;
+            return this;
+        }
+
+        @Override
+        public ServerStep port(int port) {
+            this.port = port;
+            return this;
+        }
+
+        @Override
+        public ServerStep threadCount(int threadCount) {
+            this.threadCount = threadCount;
+            return this;
+        }
+
+        @Override
+        public IocStep noMoreServerConfig() {
+            return this;
         }
 
         @Override
