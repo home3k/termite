@@ -13,6 +13,8 @@
 
 package me.home3k.termite.server;
 
+import java.io.IOException;
+
 /**
  * @author home3k
  */
@@ -23,6 +25,16 @@ public class TermiteServer implements Server {
     private int execThreadCount = 16;
 
     private int maxRequestSize = 1014 * 1024 * 10;
+
+    private TermiteReactor reactor;
+
+    private Dispatcher dispatcher;
+
+    protected void init() throws IOException {
+        dispatcher = new ThreadPoolDispatcher(execThreadCount);
+        reactor = new TermiteReactor(dispatcher);
+        reactor.registerChannel()
+    }
 
     @Override
     public void start() {

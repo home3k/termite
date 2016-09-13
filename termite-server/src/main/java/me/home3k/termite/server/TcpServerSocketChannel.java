@@ -13,8 +13,53 @@
 
 package me.home3k.termite.server;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+
 /**
  * @author home3k
  */
-public class TcpServerSocketChannel {
+public class TcpServerSocketChannel extends AbstractChannel {
+
+    private final int port;
+
+    public TcpServerSocketChannel(int port, Handler handler) throws IOException {
+        super(ServerSocketChannel.open(), handler);
+        this.port = port;
+    }
+
+    @Override
+    public int getInterestedOps() {
+        return SelectionKey.OP_ACCEPT;
+    }
+
+    @Override
+    public void bind() throws IOException {
+        ServerSocketChannel serverSocketChannel = (ServerSocketChannel) this.getChannel();
+        serverSocketChannel.socket().bind(new InetSocketAddress(InetAddress.getLocalHost(), port));
+        serverSocketChannel.configureBlocking(false);
+    }
+
+    @Override
+    public ByteBuffer read(SelectionKey key) throws IOException {
+        SocketChannel socketChannel = (SocketChannel) key.channel();
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        int read = socketChannel.read(buffer);
+        buffer.flip();
+        if(read == -1) {
+            throw new IOException("Socket closed");
+        }
+        return buffer;
+    }
+
+    @Override
+    protected void doWrite(Object pendingWrite, SelectionKey key) throws IOException {
+        ByteBuffer buffer = (ByteBuffer)pendingWrite;
+        ((SocketChannel)key.channel()).write(buffer);
+    }
 }

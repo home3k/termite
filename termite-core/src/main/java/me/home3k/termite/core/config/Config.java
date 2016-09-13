@@ -11,15 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package me.home3k.termite.core;
+package me.home3k.termite.core.config;
 
 /**
  * @author home3k
  */
-public class Termite {
-
-    private String name = "termite";
-
-    private
-
+public class Config {
 }
