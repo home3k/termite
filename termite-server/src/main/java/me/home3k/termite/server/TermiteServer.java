@@ -30,15 +30,32 @@ public class TermiteServer implements Server {
 
     private Dispatcher dispatcher;
 
+    private int port;
+
+    private Handler handler;
+
+    public TermiteServer(int port, Handler handler) {
+        this.port = port;
+        this.handler = handler;
+    }
+
+
     protected void init() throws IOException {
         dispatcher = new ThreadPoolDispatcher(execThreadCount);
         reactor = new TermiteReactor(dispatcher);
-        reactor.registerChannel()
+        TcpServerSocketChannel socketChannel = new TcpServerSocketChannel(port, handler);
+        socketChannel.bind();
+        reactor.registerChannel(socketChannel);
     }
 
     @Override
     public void start() {
-
+        try {
+            init();
+            reactor.start();
+        } catch (IOException e) {
+            // TODO
+        }
     }
 
     @Override
