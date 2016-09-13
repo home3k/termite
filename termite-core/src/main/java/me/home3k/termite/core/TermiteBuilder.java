@@ -13,6 +13,9 @@
 
 package me.home3k.termite.core;
 
+import me.home3k.termite.core.config.Config;
+import me.home3k.termite.core.config.ConfigLoader;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +89,8 @@ public final class TermiteBuilder {
 
 
     private static class TermiteSteps implements ConfigStep, NameStep, ServerStep, IocStep, RouterStep, BuildStep {
+
+        private Config config;
 
         private String name;
         private String serverType;
@@ -188,13 +193,24 @@ public final class TermiteBuilder {
 
         @Override
         public Termite build() {
-            Termite termite = new Termite();
-            return null;
+            Termite termite;
+            if (config != null) {
+                return new Termite(config);
+            } else {
+                termite = new Termite();
+            }
+            if (present(this.name)) termite.setName(this.name);
+            return termite;
         }
 
         @Override
         public BuildStep config(String configFile) {
-            return null;
+            this.config = ConfigLoader.load(configFile);
+            return this;
+        }
+
+        private static boolean present(Object object) {
+            return object != null;
         }
     }
 

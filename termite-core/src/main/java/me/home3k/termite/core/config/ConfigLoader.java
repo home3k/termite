@@ -11,27 +11,14 @@
  * or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package me.home3k.termite.core;
-
-import me.home3k.termite.core.config.Config;
+package me.home3k.termite.core.config;
 
 /**
  * @author home3k
  */
-public class Termite {
+public class ConfigLoader {
 
-    private String name = "termite";
-
-    public Termite() {}
-    public Termite(Config config) {
-
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public static Config load(String configFile) {
+        return null;
     }
 }
