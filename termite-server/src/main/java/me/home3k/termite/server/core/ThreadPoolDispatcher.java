@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package me.home3k.termite.server;
+package me.home3k.termite.server.core;
 
 import java.nio.channels.SelectionKey;
 import java.util.concurrent.ExecutorService;

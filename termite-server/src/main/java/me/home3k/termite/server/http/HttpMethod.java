@@ -11,15 +11,27 @@
  * or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package me.home3k.termite.server;
-
-import java.nio.channels.SelectionKey;
+package me.home3k.termite.server.http;
 
 /**
  * @author home3k
  */
-public interface Handler {
+public enum HttpMethod {
 
-    void handleChannelRead(AbstractChannel channel, Object readObject, SelectionKey key);
+    GET("GET"),
+
+    POST("POST"),
+
+    HEAD("HEAD"),
+
+    PUT("PUT"),
+
+    DELETE("DELETE");
+
+    private String method;
+
+    private HttpMethod(String method) {
+        this.method = method;
+    }
 
 }

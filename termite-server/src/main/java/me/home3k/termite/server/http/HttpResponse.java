@@ -11,16 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package me.home3k.termite.server;
-
-import java.nio.channels.SelectionKey;
+package me.home3k.termite.server.http;
 
 /**
  * @author home3k
  */
-public interface Dispatcher {
-
-    void onChannelReadEvent(AbstractChannel channel, Object readObject, SelectionKey key);
-
-    void stop() throws InterruptedException;
+public class HttpResponse {
 }
