@@ -11,25 +11,20 @@
  * or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package me.home3k.termite.core.config;
-
-import java.io.InputStream;
-import java.util.Properties;
+package me.home3k.termite.core.meta;
 
 /**
  * @author home3k
  */
-public class ConfigLoader {
+public enum IocType {
 
-    public static Properties load(String configFile) {
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        InputStream propIn = cl.getResourceAsStream(configFile);
-        Properties prop = new Properties();
-        try {
-            prop.load(propIn);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
-        return prop;
+    spring("spring"),
+
+    termite("termite");
+
+    private String value;
+
+    private IocType(String value) {
+        this.value = value;
     }
 }

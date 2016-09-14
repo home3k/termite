@@ -11,10 +11,22 @@
  * or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package me.home3k.termite.core.config;
+package me.home3k.termite.core.constant;
 
 /**
  * @author home3k
  */
-public class Config {
+public class Constants {
+
+    public static final String NODE_NAME = "node.name";
+
+    public static final String SERVER_TYPE = "server.type";
+
+    public static final String SERVER_PORT = "server.port";
+
+    public static final String SERVER_THREAD_COUNT = "server.thread.count";
+
+    public static final String IOC_TYPE = "ioc.type";
+
+    public static final String IOC_ENTRY = "ioc.entry";
 }

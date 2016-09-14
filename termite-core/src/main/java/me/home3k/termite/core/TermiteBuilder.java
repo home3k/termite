@@ -13,11 +13,11 @@
 
 package me.home3k.termite.core;
 
-import me.home3k.termite.core.config.Config;
 import me.home3k.termite.core.config.ConfigLoader;
+import me.home3k.termite.core.meta.IocType;
+import me.home3k.termite.core.meta.ServerType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author home3k
@@ -90,7 +90,7 @@ public final class TermiteBuilder {
 
     private static class TermiteSteps implements ConfigStep, NameStep, ServerStep, IocStep, RouterStep, BuildStep {
 
-        private Config config;
+        private Properties config;
 
         private String name;
         private String serverType;
@@ -99,7 +99,7 @@ public final class TermiteBuilder {
         private String iocType;
         private Object container;
 
-        private List<Router> routers = new ArrayList<>();
+        private List<Router> routers = new LinkedList<>();
 
         @Override
         public BuildStep defaultInfo() {
@@ -200,6 +200,13 @@ public final class TermiteBuilder {
                 termite = new Termite();
             }
             if (present(this.name)) termite.setName(this.name);
+            if (present(this.iocType)) termite.setIocType(IocType.valueOf(this.iocType.toLowerCase()));
+            if (present(this.container)) termite.setIocContainer(this.container);
+            if (present(this.port)) termite.setPort(this.port);
+            if (present(this.serverType)) termite.setServerType(ServerType.valueOf(this.serverType.toLowerCase()));
+            if (present(this.threadCount)) termite.setThreadCount(this.threadCount);
+            if (present(this.routers)) termite.setRouters(this.routers);
+
             return termite;
         }
 
@@ -210,7 +217,15 @@ public final class TermiteBuilder {
         }
 
         private static boolean present(Object object) {
-            return object != null;
+            if (object == null) {
+                return false;
+            } else {
+                if (object instanceof Collection<?>) {
+                    return !((Collection<?>) object).isEmpty();
+                } else {
+                    return true;
+                }
+            }
         }
     }
 
