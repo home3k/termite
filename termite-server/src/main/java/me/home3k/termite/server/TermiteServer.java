@@ -41,7 +41,6 @@ public class TermiteServer implements Server {
         this.handler = handler;
     }
 
-
     protected void init() throws IOException {
         dispatcher = new ThreadPoolDispatcher(execThreadCount);
         reactor = new TermiteReactor(dispatcher);
