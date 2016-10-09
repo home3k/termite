@@ -11,7 +11,9 @@
  * or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package me.home3k.termite.kit.logger;
+package me.home3k.termite.kit.logger.impl;
+
+import me.home3k.termite.kit.logger.Logger;
 
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;

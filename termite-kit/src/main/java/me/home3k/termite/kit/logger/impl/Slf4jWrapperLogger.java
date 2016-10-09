@@ -11,17 +11,23 @@
  * or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package me.home3k.termite.kit.logger;
+package me.home3k.termite.kit.logger.impl;
+
+import me.home3k.termite.kit.logger.Logger;
 
 /**
  * @author home3k
  */
-public class Log4jWrapperLogger implements Logger {
+public class Slf4jWrapperLogger implements Logger {
 
-    private org.apache.log4j.Logger LOG;
+    private org.slf4j.Logger LOG;
 
-    public Log4jWrapperLogger(Class<?> clazz) {
-        this.LOG = org.apache.log4j.Logger.getLogger(clazz);
+    public Slf4jWrapperLogger(Class<?> clazz) {
+        this.LOG = org.slf4j.LoggerFactory.getLogger(clazz);
+    }
+
+    public Slf4jWrapperLogger(String name) {
+        this.LOG = org.slf4j.LoggerFactory.getLogger(name);
     }
 
     @Override
@@ -31,6 +37,7 @@ public class Log4jWrapperLogger implements Logger {
 
     @Override
     public void info(String msg, Object... params) {
+        LOG.info(msg, params);
     }
 
     @Override
@@ -40,6 +47,7 @@ public class Log4jWrapperLogger implements Logger {
 
     @Override
     public void debug(String msg, Object... params) {
+        LOG.debug(msg, params);
     }
 
     @Override
@@ -49,6 +57,7 @@ public class Log4jWrapperLogger implements Logger {
 
     @Override
     public void warn(String msg, Object... params) {
+        LOG.warn(msg, params);
     }
 
     @Override
@@ -63,6 +72,7 @@ public class Log4jWrapperLogger implements Logger {
 
     @Override
     public void error(String msg, Object... params) {
+        LOG.error(msg, params);
     }
 
     @Override
