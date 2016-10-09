@@ -17,4 +17,27 @@ package me.home3k.termite.kit.logger;
  * @author home3k
  */
 public class LoggerFactory {
+
+    private static final boolean slf4jAvailable = present("org.slf4j.Logger");
+    private static final boolean log4jAvailable = present("org.apache.log4j.Logger");
+
+    public static boolean present(String className) {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (Throwable ex) {
+            return false;
+        }
+    }
+
+    public static Logger getLogger(Class clazz) {
+        if (slf4jAvailable) {
+            return new Slf4jWrapperLogger(clazz);
+        } else if (log4jAvailable) {
+            return new Log4jWrapperLogger(clazz);
+        }
+        return new GenericLogger(clazz);
+    }
+
+
 }
